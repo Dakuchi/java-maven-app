@@ -1,38 +1,38 @@
-#!/usr/bin/env groovy
-//def gv
+def gv
 
 pipeline {
     agent any
-    tools {
-        maven 'Maven'
-    }
     stages {
-        stage('build jar') {
+        stage("init") {
             steps {
                 script {
-                    echo "building the application..."
-                    sh 'mvn package'
+                    gv = load "script.groovy"
                 }
             }
         }
-        stage('build image') {
+        stage("build jar") {
             steps {
                 script {
-                    echo "building the docker image..."
-                    withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
-                        sh 'docker build -t dakuchi/demo-app:jma-2.0 .'
-                        sh "echo $PASS | docker login -u $USER --password-stdin"
-                        sh 'docker push dakuchi/demo-app:jma-2.0'
-			}
+                    echo "building jar"
+                    //gv.buildJar()
                 }
             }
         }
-        stage('deploy') {
+        stage("build image") {
             steps {
                 script {
-                    echo "Deploying application"
+                    echo "building image"
+                    //gv.buildImage()
                 }
             }
         }
-    }
+        stage("deploy") {
+            steps {
+                script {
+                    echo "deploying"
+                    //gv.deployApp()
+                }
+            }
+        }
+    }   
 }
