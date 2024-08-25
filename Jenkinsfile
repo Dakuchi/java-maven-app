@@ -3,9 +3,8 @@ def gv
 
 pipeline {
     agent any
-    parameters {
-        choice(name : 'VERSION', choices: ['1.1.0','1.1.2','1.3.0'],description: 'Select ver')
-        booleanParam(name: 'executeTests', defaultValue: true, description: '')
+    tools {
+        maven 'Maven'
     }
     stages {
         stage('init') {
@@ -15,37 +14,29 @@ pipeline {
                 }
             }
         }
-        stage('build') {
+        stage('build jar') {
             steps {
                 script {
-                    gv.buildApp()
+                    echo "building the application..."
+                    sh 'mvn package'
                 }
             }
         }
-        stage('test') {
-            when {
-                expression {
-                    params.executeTests
-                }
-            }
+        stage('build image') {
             steps {
                 script {
-                    gv.testApp()
+                    echo "building the docker image..."
+                    withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')])
+                        sh 'docker build -t dakuchi/demo-app:jma-2.0 .'
+                        sh "echo $PASS | docker login -u $USER --password-stdin"
+                        sh 'docker push dakuchi/demo-app:jma-2.0'
                 }
             }
         }
         stage('deploy') {
-            input {
-                message "Select the enviroment to deploy to"
-                ok "Done"
-                parameters {
-                    choice(name : 'ENV', choices: ['dev','staging','production'],description: '')
-                }
-            }
             steps {
                 script {
-                    gv.deployApp()
-                    echo "Deploying to ${ENV}"
+                    echo "Deploying application"
                 }
             }
         }
