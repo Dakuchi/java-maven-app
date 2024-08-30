@@ -20,7 +20,7 @@ pipeline {
                 script {
                     //echo "building jar"
                     //gv.buildJar()
-                    buildJar()
+                    gv.buildJar()
                 }
             }
         }
