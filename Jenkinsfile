@@ -30,6 +30,8 @@ pipeline {
                     //echo "building image"
                     //gv.buildImage()
                     buildImage 'dakuchi/demo-app:jma-3.0'
+                    dockerLogin()
+                    dockerPush 'dakuchi/demo-app:jma-3.0'
                 }
             }
         }
