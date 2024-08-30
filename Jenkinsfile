@@ -29,7 +29,7 @@ pipeline {
                 script {
                     //echo "building image"
                     //gv.buildImage()
-                    buildImage()
+                    buildImage 'dakuchi/demo-app:jma-3.0'
                 }
             }
         }
