@@ -56,12 +56,14 @@ pipeline {
         stage('commit version update') {
             steps{
                 script{
-                    withCredentials([usernamePassword(credentialsId: 'github-credentials', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+                    withCredentials([sshUserPrivateKey(credentialsId: 'Jenkins-shared-lib', keyFileVariable: 'SSH_KEY')]) {
+                        sh 'git config --global user.email "jenkins@example.com"'
                         sh 'git config --global user.email "jenkins@example.com"'
                         sh 'git config --global user.name "jenkins"'
-                        // URL encode the password
-                        sh 'ENCODED_PASS=$(echo -n $PASS | jq -sRr @uri)'
-                        sh "git remote set-url origin https://${USER}:${ENCODED_PASS}@github.com/Dakuchi/-java-maven-app.git"
+                        sh 'git status'
+                        sh 'git config --list'
+                        // Use SSH instead of HTTPS for Git operations
+                        sh "git remote set-url origin git@github.com:Dakuchi/-java-maven-app.git"
                         sh 'git add .'
                         sh 'git commit -m "ci: version bump"'
                         sh 'git push origin HEAD:jenkins-jobs'
