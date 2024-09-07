@@ -15,7 +15,7 @@ pipeline {
     tools {
         maven 'Maven'
     }
-    enviroment {
+    environment {
         IMAGE_NAME = 'dakuchi/demo-app:1.0'
     }
     stages {
