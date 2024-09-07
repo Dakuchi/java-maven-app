@@ -60,8 +60,6 @@ pipeline {
                         sh 'git config --global user.email "jenkins@example.com"'
                         sh 'git config --global user.email "jenkins@example.com"'
                         sh 'git config --global user.name "jenkins"'
-                        sh 'git status'
-                        sh 'git config --list'
                         // Use SSH instead of HTTPS for Git operations
                         sh "git remote set-url origin git@github.com:Dakuchi/-java-maven-app.git"
                         sh 'git add .'
