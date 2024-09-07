@@ -11,7 +11,7 @@ pipeline {
                 script {
                     gv = load "script.groovy"
                     echo "Initial the application in the $BRANCH_NAME"
-                    echo "tet"
+                    echo "test webhook"
                 }
             }
         }
