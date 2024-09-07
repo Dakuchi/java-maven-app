@@ -1,12 +1,28 @@
 #!/usr/bin/env groovy
 
+library identifier: 'jenkins-shared-library@master' , retriever: modernSCM(
+    [
+        $class: 'GitSCMSource',
+        remote: 'git@github.com:Dakuchi/jenkins-shared-library.git',
+        credentialsId: 'github-sshkey'
+    ]
+)
+
+def gv
+
 pipeline {
     agent any
+    tools {
+        maven 'Maven'
+    }
+    enviroment {
+        IMAGE_NAME = 'dakuchi/demo-app:1.0'
+    }
     stages {
         stage("build jar") {
             steps {
                 script {
-                    echo "building jar"
+                    buildJar()
                     //gv.buildJar()
                 }
             }
@@ -15,6 +31,9 @@ pipeline {
             steps {
                 script {
                     echo "building image"
+                    buildImage(env.IMAGE_NAME)
+                    dockerLogin()
+                    dockerPush(env.IMAGE_NAME)
                     //gv.buildImage()
                 }
             }
