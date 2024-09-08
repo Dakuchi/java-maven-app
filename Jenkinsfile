@@ -1,7 +1,7 @@
 #!/usr/bin/env groovy
 
 library identifier: 'jenkins-shared-library@master' , retriever: modernSCM(
-// Jenkins shared library.
+// Jenkins shared library
     [
         $class: 'GitSCMSource',
         remote: 'git@github.com:Dakuchi/jenkins-shared-library.git',
@@ -34,8 +34,7 @@ pipeline {
         stage("build jar") {
             steps {
                 script {
-                    sh 'mvn clean package'
-                    //buildJar()
+                    buildJar()
                     //gv.buildJar()
                 }
             }
@@ -79,7 +78,7 @@ pipeline {
                         sh "git remote set-url origin git@github.com:Dakuchi/-java-maven-app.git"
                         sh 'git add .'
                         sh 'git commit -m "ci: version bump"'
-                        sh 'git push origin HEAD:Version-increment'
+                        sh 'git push origin HEAD:jenkins-pipeline'
                     }
                 }
             }
