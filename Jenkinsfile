@@ -43,7 +43,7 @@ pipeline {
                 script {
                     def ec2IP = '18.139.227.202'
                     //def dockerComposeCmd = "docker compose -f docker-compose.yaml up --detach"
-                    def shellCmd = "bash ./server-cmds.sh"
+                    def shellCmd = "bash ./server-cmds.sh ${IMAGE_NAME}"
                     sshagent(['ec2-server-key']) {
                         sh "scp -o StrictHostKeyChecking=no server-cmds.sh ec2-user@${ec2IP}:/home/ec2-user"
                         sh "scp -o StrictHostKeyChecking=no docker-compose.yaml ec2-user@${ec2IP}:/home/ec2-user" 
