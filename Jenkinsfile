@@ -1,16 +1,5 @@
 #!/usr/bin/env groovy
 
-library identifier: 'jenkins-shared-library@master' , retriever: modernSCM(
-// Jenkins shared library
-    [
-        $class: 'GitSCMSource',
-        remote: 'git@github.com:Dakuchi/jenkins-shared-library.git',
-        credentialsId: 'github-sshkey'
-    ]
-)
-
-def gv
-
 pipeline {
     agent any
     tools {
@@ -34,8 +23,8 @@ pipeline {
         stage("build jar") {
             steps {
                 script {
-                    buildJar()
-                    //gv.buildJar()
+                    echo "building the application..."
+                    sh 'mvn clean package'
                 }
             }
         }
@@ -43,15 +32,16 @@ pipeline {
         // build image and push to docker hub
             steps {
                 script {
-                    echo "building image"
-                    buildImage(env.IMAGE_NAME)
-                    dockerLogin()
-                    dockerPush(env.IMAGE_NAME)
-                    //gv.buildImage()sd
-                }
+                    echo "building the docker image..."
+                    withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+                        sh "docker build -t dakuchi/demo-app:${IMAGE_NAME} ."
+                        sh "echo $PASS | docker login -u $USER --password-stdin"
+                        sh "docker push dakuchi/demo-app:${IMAGE_NAME}"
+                    }
             }
         }
         stage('deploy') {
+        // deploy image on AWS EKS cluster
             environment {
                AWS_ACCESS_KEY_ID = credentials('jenkins_aws_access_key_id')
                AWS_SECRET_ACCESS_KEY = credentials('jenkins_aws_secret_access_key')
@@ -60,8 +50,8 @@ pipeline {
             steps {
                 script {
                    echo 'deploying docker image...'
-                   sh 'envsubst < deployment and service config/deployment.yaml | kubectl apply -f -'
-                   sh 'envsubst < deployment and service config/service.yaml | kubectl apply -f -'
+                   sh 'envsubst < deploy-config/deployment.yaml | kubectl apply -f -'
+                   sh 'envsubst < deploy-config/service.yaml | kubectl apply -f -'
                 }
             }
         }
