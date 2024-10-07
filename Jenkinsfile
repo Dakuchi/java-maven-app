@@ -68,6 +68,7 @@ pipeline {
                     echo "The EC2 public IP is: ${EC2_PUBLIC_IP}"
                     def ec2Instance = "ec2-user@${EC2_PUBLIC_IP}"
                     def shellCmd = "bash ./server-cmds.sh ${IMAGE_NAME}"
+                    echo "ssh server: ${ec2Instance}"
 
                     sshagent(['server-ssh-key']) {
                         sh "scp -o StrictHostKeyChecking=no server-cmds.sh ${ec2Instance}:/home/ec2-user"
