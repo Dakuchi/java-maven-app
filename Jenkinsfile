@@ -39,12 +39,12 @@ pipeline {
         }
         stage("provision server") {
             // terraform provision server
+            environment {
+                AWS_ACCESS_KEY_ID = credentials('jenkins_aws_access_key_id')
+                AWS_SECRET_ACCESS_KEY = credentials('jenkins_aws_secret_access_key')
+                TF_VAR_env_prefix = 'test'
+            }
             steps {
-                environment {
-                    AWS_ACCESS_KEY_ID = credentials('jenkins_aws_access_key_id')
-                    AWS_SECRET_ACCESS_KEY = credentials('jenkins_aws_secret_access_key')
-                    TF_VAR_env_prefix = 'test'
-                }
                 script {
                     dir("terraform") {
                         sh "terraform init"
