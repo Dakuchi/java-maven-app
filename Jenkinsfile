@@ -70,9 +70,9 @@ pipeline {
                     def shellCmd = "bash ./server-cmds.sh ${IMAGE_NAME}"
 
                     sshagent(['server-ssh-key']) {
-                        sh "scp -o StrictHostKeyChecking=no server-cmds.sh ec2Instance:/home/ec2-user"
-                        sh "scp -o StrictHostKeyChecking=no docker-compose.yaml ec2Instance:/home/ec2-user" 
-                        sh "ssh -o StrictHostKeyChecking=no ec2Instance ${shellCmd}"
+                        sh "scp -o StrictHostKeyChecking=no server-cmds.sh ${ec2Instance}:/home/ec2-user"
+                        sh "scp -o StrictHostKeyChecking=no docker-compose.yaml ${ec2Instance}:/home/ec2-user" 
+                        sh "ssh -o StrictHostKeyChecking=no ${ec2Instance} ${shellCmd}"
                     }
                 }
             }
