@@ -1,0 +1,56 @@
+---
+- name: Install python3, docker 
+  hosts: tag_Name_dev_server
+  become: True
+  tasks:
+    - name: Make sure python3 and docker are installed
+      vars:
+        ansible_python_interpreter: /usr/bin/python
+      yum:
+        name: 
+          - python3
+          - docker
+        update_cache: True
+        state: present
+
+- name: Downgrade urllib3 version
+  hosts: tag_Name_dev_server
+  become: True
+  tasks:
+    - name: Uninstall the existing urllib3 package
+      pip:
+        name: urllib3
+        state: absent
+
+    - name: Install urllib3 version 1.26.7
+      pip:
+        name: urllib3==1.26.7
+
+- name: Install docker-compose
+  hosts: tag_Name_dev_server
+  become: True
+  tasks:
+    - name: Install docker-compose
+      get_url:
+        url: https://github.com/docker/compose/releases/download/v2.29.6/docker-compose-Linux-{{lookup('pipe', 'uname -m')}}
+        dest: /usr/local/bin/docker-compose
+        mode: +x
+
+- name: Start docker deamon
+  hosts: tag_Name_dev_server
+  become: True
+  tasks:
+    - name: Ensure docker is running
+      systemd:
+        name: docker
+        state: started
+
+- name: Install docker and docker-compose python module
+  hosts: tag_Name_dev_server
+  become: True
+  tasks:
+      - name: Install docker python module
+        pip:
+          name:
+            - docker
+            - docker-compose
