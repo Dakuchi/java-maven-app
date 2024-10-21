@@ -18,7 +18,6 @@ pipeline {
                 }
             }
         }
-		/*
 		stage("execute ansible playbook") {
 			steps {
 				script{
@@ -31,12 +30,12 @@ pipeline {
 					withCredentials([sshUserPrivateKey(credentialsId: 'ansible-server-key', keyFileVariable: 'keyfile', usernameVariable: 'user')]) {
 						remote.user = user
 						remote.identifyDile = keyfile
-						/sshScript remote: remote, script: "prepare-ansible-server.sh"
+						//sshScript remote: remote, script: "prepare-ansible-server.sh"
 						sshCommand remote: remote, command: "ls -l"
-						/sshCommand remote: remote, command: "ansible-playbook my-playbook.yaml"
+						//sshCommand remote: remote, command: "ansible-playbook my-playbook.yaml"
 					}
 				}
 			}
-		}*/
+		}
     }   
 }
