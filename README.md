@@ -1,30 +1,49 @@
 # Multibranch Jenkins Job for Main Branch
 
-This document outlines the setup and testing process for a multibranch Jenkins job that demonstrates the pipeline stages for the `main` branch of this project. In this demonstration, the actual build and deploy functions are represented by placeholder commands (`echo "building image"` and `echo "deploying app"`).
+This document outlines the setup and testing process for a multibranch Jenkins job that demonstrates the build and deploy pipeline stages for the `main` branch of this project. The pipeline uses a Groovy script to:
+
+- **Build the Application JAR**
+- **Build a Docker Image**
+- **Push the Docker Image to Docker Hub**
 
 ## Overview
 
-The multibranch Jenkins job is configured to automatically detect branches in the repository and trigger builds based on the Jenkinsfile for each branch. In this case, the `main` branch will demonstrate:
-- **Build Stage**: A placeholder that simulates building the application.
-- **Deploy Stage**: A placeholder that simulates deploying the application.
+The multibranch Jenkins job is configured to automatically detect branches in the repository and trigger builds based on the Jenkinsfile for each branch. In this case, the `main` branch demonstrates:
+
+- **Build Stage**: Uses Maven to build the application JAR.
+- **Docker Build Stage**: Creates and pushes a Docker image to Docker Hub.
+- **Deploy Stage**: Placeholder stage for deploying the application.
+
+The pipeline is implemented using a **Groovy script** within the Jenkinsfile, providing flexibility and customization for the build and deployment process.
 
 ## Pre-requisites
 
-- A running Jenkins server with the necessary plugins (Git, Pipeline) installed.
+- A running Jenkins server with the necessary plugins (Git, Docker, Pipeline) installed.
+- **Maven plugin** installed in Jenkins to handle the Maven build process.
+- Docker credentials configured in Jenkins (`docker-hub-repo`).
 - Jenkins set up using Docker Compose or manually.
-- The repository configured with a Jenkinsfile for the `main` branch.
+- Access to Docker for building and pushing the image.
+- Docker permissions set within the Jenkins container to allow execution of Docker commands.
 
 For instructions on how to set up the Jenkins server using Docker Compose, refer to the [Jenkins Server Setup Guide](https://github.com/Dakuchi/java-maven-app/tree/jenkins-server-setup#jenkins-server-setup-with-docker-compose).
 
 ## Steps to Configure and Run the Multibranch Pipeline Job
 
-### 1. Create a New Multibranch Pipeline in Jenkins
+### 1. Install the Maven Plugin in Jenkins
+
+Before setting up the multibranch job, ensure the Maven plugin is installed:
+
+1. In Jenkins, go to **Manage Jenkins** > **Manage Plugins**.
+2. Search for the **Maven Integration Plugin** in the **Available** tab.
+3. Install the plugin and restart Jenkins if necessary.
+
+### 2. Create a New Multibranch Pipeline in Jenkins
 
 1. In Jenkins, click on **New Item**.
 2. Select **Multibranch Pipeline** and give the job a name (e.g., `Multibranch-JavaApp`).
 3. Click **OK**.
 
-### 2. Configure the Multibranch Pipeline
+### 3. Configure the Multibranch Pipeline
 
 1. In the **Branch Sources** section, click **Add Source** and select **Git**.
 2. In the **Repository URL** field, enter the URL of your Git repository: https://github.com/Dakuchi/java-maven-app.git
@@ -32,14 +51,13 @@ For instructions on how to set up the Jenkins server using Docker Compose, refer
 4. In the **Discover Branches** behavior, ensure Jenkins is configured to detect all branches.
 5. Save the configuration.
 
-### 3. Running the Multibranch Pipeline
+### 4. Permissions for Docker Execution
 
-Once configured, Jenkins will automatically scan the repository for branches and create jobs for each one. However, in this case, we are focused on the `main` branch.
+To ensure Jenkins can run Docker commands inside the Jenkins container, we need to adjust the permissions of the Docker socket:
 
-1. Jenkins should detect the `main` branch and create a job for it.
-2. The job will run the pipeline defined in the Jenkinsfile for the `main` branch.
-3. The build progress will be show and logs in Jenkins, which will display:
-- `echo "Building image"` in the build stage.
-- `echo "Deploying app"` in the deploy stage.
+1. Open a shell session in the running Jenkins container with root privilege:
 
-
+```bash
+docker exec -u 0 -it jenkins bash
+chmod 666 /var/run/docker.sock
+```
