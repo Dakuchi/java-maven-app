@@ -2,8 +2,7 @@
 
 This branch demonstrates an automated process for incrementing the version in the `pom.xml` file whenever code changes are pushed to the repository. The updated version is then committed back to the repository.
 
-![Uploading version increase.png…]()
-
+![version increase](https://github.com/user-attachments/assets/44aa3807-9636-4ac2-a517-4dad924c8cfb)
 
 ## Overview
 
