@@ -5,7 +5,7 @@ This branch extends the CI/CD pipeline by adding an automated deployment step to
 - Creates and pushes a Docker image
 - Deploys the Docker container to an EC2 instance using SSH
 
-![ssh agent](https://github.com/user-attachments/assets/efbd66af-a7de-4e00-b911-85ac1147601c)
+![ssh agent](https://github.com/user-attachments/assets/8327e00c-353a-47a9-b244-3c661bd80cf3)
 
 ## Overview
 
