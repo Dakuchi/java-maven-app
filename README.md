@@ -2,11 +2,14 @@
 
 This branch demonstrates an automated process for incrementing the version in the `pom.xml` file whenever code changes are pushed to the repository. The updated version is then committed back to the repository.
 
+![version increase](https://github.com/user-attachments/assets/4ae3556e-76fe-4005-9de6-f88d537b314a)
+
 ## Overview
 
 The version increment process works as follows:
 - **Version Increment**: The version in the `pom.xml` file is incremented using the Maven `build-helper` and `versions` plugins.
-- **Build Process**: The project is built using Maven, and a Docker image is created with the incremented version in the tag.
+- **Build Process**: The project is built using Maven, and a Docker i![version increase](https://github.com/user-attachments/assets/0718b6c7-2673-4c60-b9b6-5cb5082ac136)
+mage is created with the incremented version in the tag.
 - **Commit and Push**: The updated `pom.xml` file is committed and pushed back to the repository.
 
 ## Key Features
