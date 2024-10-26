@@ -2,7 +2,7 @@
 
 This branch demonstrates an automated process for incrementing the version in the `pom.xml` file whenever code changes are pushed to the repository. The updated version is then committed back to the repository.
 
-![ssh agent](https://github.com/user-attachments/assets/fb788cea-39d4-4b1e-b274-d0c693fb6dc4)
+![version increase](https://github.com/user-attachments/assets/2f6d81fa-dd52-49df-b13f-e83a861f6a63)
 
 ## Overview
 
