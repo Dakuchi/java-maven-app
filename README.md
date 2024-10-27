@@ -17,17 +17,17 @@ The [`main`](https://github.com/Dakuchi/java-maven-app/tree/main) branch contain
 
 ## Feature Branches
 
-### [`feature/ansible`](https://github.com/Dakuchi/java-maven-app/tree/feature/ansible)
-Integrates **Ansible** to install software on a remote server as part of the Jenkins pipeline. This branch demonstrates how Jenkins can interact with remote environments via Ansible for automated provisioning.
+### [`jenkins-server-setup`](https://github.com/Dakuchi/java-maven-app/tree/jenkins-server-setup)
+Setup Jenkins server for this project.
 
-### [`feature/sshagent-terraform`](https://github.com/Dakuchi/java-maven-app/tree/feature/sshagent-terraform)
-Adds a **Terraform** stage to provision an EC2 instance within the Jenkinsfile. This stage sets up the necessary infrastructure for deploying the app on AWS.
+### [`jenkins-jobs`](https://github.com/Dakuchi/java-maven-app/tree/jenkins-jobs)
+Builds Docker images using a Groovy script for a **multi-branch Jenkins job**. This branch highlights how different branches in a repository can trigger independent Jenkins jobs.
 
-### [`feature/jenkinsfile-sshagent`](https://github.com/Dakuchi/java-maven-app/tree/feature/jenkinsfile-sshagent)
-This branch adds an **sshagent** step in the Jenkinsfile, which allows Jenkins to securely copy scripts to the EC2 instance and execute them remotely.
+### [`jenkins-shared-lib`](https://github.com/Dakuchi/java-maven-app/tree/jenkins-shared-lib)
+This branch uses a **Jenkins shared library** to build the Java Maven app. It demonstrates the reusability of pipeline code using shared libraries.
 
-### [`feature/deploy-on-k8s`](https://github.com/Dakuchi/java-maven-app/tree/feature/deploy-on-k8s)
-Includes **Kubernetes deployment** in the Jenkinsfile, showcasing how the application can be deployed in a Kubernetes cluster as part of the CI/CD pipeline.
+### [`Version-increment`](https://github.com/Dakuchi/java-maven-app/tree/Version-increment)
+This branch focuses on automatically updating the **minor version** in the `pom.xml` file whenever changes are detected in the Git repository. Jenkins manages this process through a version-incrementing pipeline.
 
 ### [`jenkins-pipeline`](https://github.com/Dakuchi/java-maven-app/tree/jenkins-pipeline)
 A basic Jenkins pipeline job that covers the following stages:
@@ -37,14 +37,20 @@ A basic Jenkins pipeline job that covers the following stages:
 4. **Pull Image to Deployment Server**: Pulls the image from Docker Hub or ECR to the deployment server.
 5. **Commit Version**: Commits the new version to the Git repository.
 
-### [`Version-increment`](https://github.com/Dakuchi/java-maven-app/tree/Version-increment)
-This branch focuses on automatically updating the **minor version** in the `pom.xml` file whenever changes are detected in the Git repository. Jenkins manages this process through a version-incrementing pipeline.
+### [`feature/jenkinsfile-sshagent`](https://github.com/Dakuchi/java-maven-app/tree/feature/jenkinsfile-sshagent)
+This branch adds an **sshagent** step in the Jenkinsfile, which allows Jenkins to securely copy scripts to the EC2 instance and execute them remotely.
 
-### [`jenkins-shared-lib`](https://github.com/Dakuchi/java-maven-app/tree/jenkins-shared-lib)
-This branch uses a **Jenkins shared library** to build the Java Maven app. It demonstrates the reusability of pipeline code using shared libraries.
+### [`feature/sshagent-terraform`](https://github.com/Dakuchi/java-maven-app/tree/feature/sshagent-terraform)
+Adds a **Terraform** stage to provision an EC2 instance within the Jenkinsfile. This stage sets up the necessary infrastructure for deploying the app on AWS.
 
-### [`jenkins-jobs`](https://github.com/Dakuchi/java-maven-app/tree/jenkins-jobs)
-Builds Docker images using a Groovy script for a **multi-branch Jenkins job**. This branch highlights how different branches in a repository can trigger independent Jenkins jobs.
+### [`feature/deploy-on-k8s`](https://github.com/Dakuchi/java-maven-app/tree/feature/deploy-on-k8s)
+Includes **Kubernetes deployment** in the Jenkinsfile, showcasing how the application can be deployed in a Kubernetes cluster as part of the CI/CD pipeline.
+
+### [`feature/deploy-on-k8s-ecr`](https://github.com/Dakuchi/java-maven-app/tree/feature/deploy-on-k8s-ecr)
+Update from [`deploy-on-k8s`](https://github.com/Dakuchi/java-maven-app/tree/feature/deploy-on-k8s) branch with images build and deploy image on AWS ECR instead of DockerHub.
+
+### [`feature/ansible`](https://github.com/Dakuchi/java-maven-app/tree/feature/ansible)
+Integrates **Ansible** to install software on a remote server as part of the Jenkins pipeline. This branch demonstrates how Jenkins can interact with remote environments via Ansible for automated provisioning.
 
 ## Technologies Used
 - **Jenkins**: Automates the CI/CD pipeline.
