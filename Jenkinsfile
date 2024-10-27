@@ -21,6 +21,7 @@ pipeline {
 			steps {
 				script{
 					echo "calling ansible playbook to configure ec2 instance"
+                    
                     // Create object for remote ssh 
 					def remote = [:]
 					remote.name = "ansible-server"
