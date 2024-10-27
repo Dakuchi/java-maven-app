@@ -2,12 +2,12 @@
 
 ## Overview
 
-![pipeline terraform](https://github.com/user-attachments/assets/eebdd900-033c-4972-a4c6-a43536b94e94)
-
 This branch extends the CI/CD pipeline by provisioning an EC2 instance and configuring its network resources using Terraform, then deploying the application on the instance. The key features added in this branch include:
 - Automated VPC, subnet, internet gateway, and security group creation
 - Storing the Terraform state in an S3 bucket for collaboration
 - Setting up the EC2 instance with Docker and Docker Compose for deployment
+
+![pipeline terraform](https://github.com/user-attachments/assets/3e4e1e91-30ad-4416-a116-801f5a8eb59f)
 
 The Terraform configuration is managed within the `terraform` folder and includes files like `main.tf`, `variables.tf`, and `entry_script.sh`.
 
@@ -51,7 +51,7 @@ For more on setting up AWS CLI and Terraform, refer to [AWS CLI Documentation](h
    - Uses Terraform to provision the infrastructure and create an EC2 instance.
    - Stores the Terraform state in an S3 bucket for shared access.
    - Configures the EC2 instance with Docker and Docker Compose for deployment.
-4. **Deploy to EC2**: Deploys the Docker container to the provisioned EC2 instance using SSH. The EC2 public IP, retrieved from the Terraform output, is used in this stage. 
+4. **Deploy to EC2**: Copy and execute the `server-cmds.sh` on the provisioned EC2 instance using SSH, the `server-cmd.sh` login to Docker Hub and run `docker-compose.yaml` file to deploy docker container.
 
 ## Usage
 
