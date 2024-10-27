@@ -13,7 +13,7 @@ spec:
         app: $APP_NAME
     spec:
       imagePullSecrets:
-        - name: << secret key name >>
+        - name: docker-registry-key
       containers:
         - name: $APP_NAME
           image: dakuchi/demo-app:$IMAGE_NAME

@@ -51,6 +51,7 @@ pipeline {
             steps {
                 script {
                    echo 'deploying docker image...'
+                   // replace the APP_NAME and IMAGE_NAME with Jenkins environment variable using gettext-base tool
                    sh 'envsubst < deploy-config/deployment.yaml | kubectl apply -f -'
                    sh 'envsubst < deploy-config/service.yaml | kubectl apply -f -'
                 }
@@ -64,7 +65,6 @@ pipeline {
                         sh 'git config --global user.email "jenkins@example.com"'
                         sh 'git config --global user.email "jenkins@example.com"'
                         sh 'git config --global user.name "jenkins"'
-                        // Use SSH instead of HTTPS for Git operations
                         sh "git remote set-url origin git@github.com:Dakuchi/-java-maven-app.git"
                         sh 'git add .'
                         sh 'git commit -m "ci: version bump"'
