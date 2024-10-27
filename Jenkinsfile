@@ -19,10 +19,11 @@ pipeline {
     }
     stages {
         stage("build app") {
+            // build jar file
             steps {
                 script {
-					echo 'building application jar...'				
-					buildJar()
+                    echo 'building application jar...'
+                    buildJar()
                 }
             }
         }
@@ -70,6 +71,8 @@ pipeline {
                     echo "deploying docker image to EC2 ..."
                     echo "The EC2 public IP is: ${EC2_PUBLIC_IP}"
                     def ec2Instance = "ec2-user@${EC2_PUBLIC_IP}"
+                    
+                    // Retrieve the DOCKER_CREDS_USR and DOCKER_CREDS_PSW variables from DOCKER_CREDS environment variable
                     def shellCmd = "bash ./server-cmds.sh ${IMAGE_NAME} ${DOCKER_CREDS_USR} ${DOCKER_CREDS_PSW}"
                     echo "ssh server: ${ec2Instance}"
 
