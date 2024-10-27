@@ -25,6 +25,7 @@ pipeline {
             }
         }
         stage("build app") {
+        // build jar file
             steps {
                 script {
                    echo "building the application..."
@@ -71,7 +72,7 @@ pipeline {
                         sh "git remote set-url origin git@github.com:Dakuchi/-java-maven-app.git"
                         sh 'git add .'
                         sh 'git commit -m "ci: version bump"'
-                        sh 'git push origin HEAD:jenkins-pipeline-ecr'
+                        sh 'git push origin HEAD:deploy-on-k8s-ecr'
                     }
                 }
             }
